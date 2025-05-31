@@ -8,7 +8,7 @@ const {
   Events 
 } = require('discord.js');
 
-const TOKEN = 'MTM3NTYwNTE2MDA5MjM2ODkxNg.Gz0a1c.sXs_BkaXluI390irmc0LxnUMHc3iwXFoab6quA'; // Replace this with your bot token
+const TOKEN = 'MTM3NTYwNTE2MDA5MjM2ODkxNg.GT8fUR.LwWBctTh6XKV9hZ9vka_Q-EdR_w5A3pHUvM-0E'; // Replace this with your bot token
 const BUTTON_CHANNEL_ID = '1375140214514913290'; // Channel with the start button
 const REPORT_CHANNEL_ID = '1375625045053014065'; // Channel where apps are sent
 
