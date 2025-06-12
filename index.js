@@ -10,7 +10,7 @@ const {
 
 const TOKEN = 'MTM3NTYwNTE2MDA5MjM2ODkxNg.GT8fUR.LwWBctTh6XKV9hZ9vka_Q-EdR_w5A3pHUvM-0E'; // Replace this with your bot token
 const BUTTON_CHANNEL_ID = '1375140214514913290'; // Channel with the start button
-const REPORT_CHANNEL_ID = '1375625045053014065'; // Channel where apps are sent
+const REPORT_CHANNEL_ID = '1378456297644626081'; // Channel where apps are sent
 
 const client = new Client({
   intents: [
