@@ -1,3 +1,4 @@
+const fs = require('fs');
 const {
   Client,
   GatewayIntentBits,
@@ -8,8 +9,6 @@ const {
   EmbedBuilder,
   Events
 } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
 
 const TOKEN = 'MTM3NTYwNTE2MDA5MjM2ODkxNg.GuggTX.N0_BXtJ2x2V_flZ9AUs6KbAI8zo7jwSvY2Z4PY';
 const BUTTON_CHANNEL_ID = '1375140214514913290';
@@ -37,6 +36,25 @@ const questions = [
 
 const userStates = new Map();
 let buttonSent = false; // Track if the button has been sent
+
+// Load user states from the file when the bot starts
+function loadUserStates() {
+  if (fs.existsSync('userStates.json')) {
+    const data = fs.readFileSync('userStates.json');
+    const states = JSON.parse(data);
+    states.forEach(([userId, state]) => {
+      userStates.set(userId, state);
+    });
+  }
+}
+
+// Save user states to the file
+function saveUserStates() {
+  fs.writeFileSync('userStates.json', JSON.stringify([...userStates]));
+}
+
+// Load user states on bot start
+loadUserStates();
 
 client.once(Events.ClientReady, async () => {
   console.log(`Logged in as ${client.user.tag}`);
@@ -203,5 +221,8 @@ client.on(Events.MessageCreate, async (message) => {
     });
   }
 });
+
+// Save the user states periodically
+setInterval(saveUserStates, 60000); // Save every minute
 
 client.login(TOKEN);
