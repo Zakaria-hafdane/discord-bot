@@ -11,7 +11,7 @@ const {
 const fs = require('fs');
 const path = require('path');
 
-const TOKEN = 'MTM3NTYwNTE2MDA5MjM2ODkxNg.GFRdxc.G46kgdPbcRNFDLrdZQ2fyJSBxqMUrOlp8QqWIU';
+const TOKEN = 'MTM3NTYwNTE2MDA5MjM2ODkxNg.GuggTX.N0_BXtJ2x2V_flZ9AUs6KbAI8zo7jwSvY2Z4PY';
 const BUTTON_CHANNEL_ID = '1375140214514913290';
 const REPORT_CHANNEL_ID = '1378456297644626081';
 const VC_LINK = 'https://discord.com/channels/1374511524273459250/1375138498910228500';
@@ -110,8 +110,15 @@ client.on(Events.InteractionCreate, async (interaction) => {
     // Handle 'apply' button interaction
     else if (interaction.customId === 'apply') {
       const userId = interaction.user.id;
-      userStates.set(userId, { step: 0, answers: [] });
 
+      // Make sure that the user hasn't already started the application process
+      if (!userStates.has(userId)) {
+        userStates.set(userId, { step: 0, answers: [] });
+      }
+
+      const state = userStates.get(userId);
+
+      // Send the first question
       const embed = new EmbedBuilder()
         .setTitle(`❓ Whitelist Application - Question 1/${questions.length}`)
         .setDescription(
@@ -123,7 +130,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
         .setColor('Blue')
         .setFooter({ text: '📝 X-LIFE RP | Serious RP Only' });
 
-      // Respond immediately after the Apply button click
       await interaction.reply({ embeds: [embed], files: ['./logo.png'] });
     }
 
@@ -147,9 +153,11 @@ client.on(Events.MessageCreate, async (message) => {
   const state = userStates.get(message.author.id);
   if (!state) return;
 
+  // Save the user's answer
   state.answers[state.step] = message.content;
   state.step++;
 
+  // Only send the next question if the user hasn't completed all questions
   if (state.step < questions.length) {
     const embed = new EmbedBuilder()
       .setTitle(`❓ Whitelist Application - Question ${state.step + 1}/${questions.length}`)
@@ -164,6 +172,7 @@ client.on(Events.MessageCreate, async (message) => {
 
     await message.channel.send({ embeds: [embed], files: ['./logo.png'] });
   } else {
+    // If all questions are answered, process the responses
     userStates.delete(message.author.id);
 
     await message.channel.send({
