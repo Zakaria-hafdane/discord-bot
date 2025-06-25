@@ -10,7 +10,7 @@ const {
   Events
 } = require('discord.js');
 
-const TOKEN = 'MTM3NTYwNTE2MDA5MjM2ODkxNg.GuggTX.N0_BXtJ2x2V_flZ9AUs6KbAI8zo7jwSvY2Z4PY';
+const TOKEN = 'put your bot token here';
 const BUTTON_CHANNEL_ID = '1375140214514913290';
 const REPORT_CHANNEL_ID = '1378456297644626081';
 const VC_LINK = 'https://discord.com/channels/1374511524273459250/1375138498910228500';
